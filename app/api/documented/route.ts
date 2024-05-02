@@ -1,11 +1,26 @@
 import { TypedNextResponse, route, routeOperation } from "next-rest-framework";
 import { z } from "zod";
 
-const MOCK_TODOS = [
+const MOCK_COMPANIES = [
   {
     id: 1,
     name: "Travelport",
     learningNow: true,
+  },
+  {
+    id: 2,
+    name: "OpenAI",
+    learningNow: false,
+  },
+  {
+    id: 3,
+    name: "Antrophic",
+    learningNow: false,
+  },
+  {
+    id: 4,
+    name: "Meta",
+    learningNow: false,
   },
 ];
 
@@ -27,7 +42,7 @@ export const { GET, POST } = route({
       },
     ])
     .handler(() => {
-      return TypedNextResponse.json(MOCK_TODOS, {
+      return TypedNextResponse.json(MOCK_COMPANIES, {
         status: 200,
       });
     }),
