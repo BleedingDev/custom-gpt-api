@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/basic": {
+    "/api/basic/route.ts": {
       "get": {
         "operationId": "bestAiCompany",
         "responses": {
@@ -24,16 +24,15 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnexpectedError"
-                }
+                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
               }
             }
           }
-        }
+        },
+        "description": "Get the best AI company in the world."
       }
     },
-    "/api/documented": {
+    "/api/post/route.ts": {
       "get": {
         "operationId": "getBestCompanies",
         "responses": {
@@ -51,9 +50,7 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnexpectedError"
-                }
+                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
               }
             }
           }
@@ -96,14 +93,57 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnexpectedError"
-                }
+                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
               }
             }
           }
         },
         "description": "Add new company to the list of best AI companies in the world."
+      }
+    },
+    "/api/validate/route.ts": {
+      "post": {
+        "operationId": "validateJson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateJsonRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Response for status 201",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateJson201ResponseBody"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response for status 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateJson400ResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred, trying again might help.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
+              }
+            }
+          }
+        },
+        "description": "Validate JSON against schema"
       }
     }
   },
@@ -111,36 +151,20 @@
     "schemas": {
       "BestAiCompany200ResponseBody": {
         "type": "object",
-        "properties": {
-          "bestAiCompany": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "bestAiCompany"
-        ],
+        "properties": { "bestAiCompany": { "type": "string" } },
+        "required": ["bestAiCompany"],
         "additionalProperties": false
       },
-      "CreateBestCompany201ResponseBody": {
-        "type": "string"
-      },
-      "CreateBestCompany401ResponseBody": {
-        "type": "string"
-      },
+      "CreateBestCompany201ResponseBody": { "type": "string" },
+      "CreateBestCompany401ResponseBody": { "type": "string" },
       "CreateBestCompanyRequestBody": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "learningNow": {
-            "type": "boolean"
-          }
+          "id": { "type": "number" },
+          "name": { "type": "string" },
+          "learningNow": { "type": "boolean" }
         },
-        "required": [
-          "name",
-          "learningNow"
-        ],
+        "required": ["name"],
         "additionalProperties": false
       },
       "GetBestCompanies200ResponseBody": {
@@ -148,37 +172,31 @@
         "items": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "number"
-            },
-            "name": {
-              "type": "string"
-            },
-            "learningNow": {
-              "type": "boolean"
-            }
+            "id": { "type": "number" },
+            "name": { "type": "string" },
+            "learningNow": { "type": "boolean" }
           },
-          "required": [
-            "id",
-            "name"
-          ],
+          "required": ["id", "name"],
           "additionalProperties": false
         }
       },
       "UnexpectedError": {
         "type": "object",
+        "properties": { "message": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "ValidateJson201ResponseBody": { "type": "string" },
+      "ValidateJson400ResponseBody": { "type": "string" },
+      "ValidateJsonRequestBody": {
+        "type": "object",
         "properties": {
-          "message": {
-            "type": "string"
-          }
+          "json": { "type": "string" },
+          "schema": { "type": "string" }
         },
+        "required": ["json", "schema"],
         "additionalProperties": false
       }
     }
   },
-  "servers": [
-    {
-      "url": "https://custom-gpt-api.vercel.app/"
-    }
-  ]
+  "servers": [{ "url": "https://custom-gpt-api.vercel.app/" }]
 }
