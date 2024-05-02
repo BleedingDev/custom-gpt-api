@@ -31,13 +31,15 @@ export const { POST } = route({
     .handler(async (req) => {
       try {
         const { json, schema } = await req.json();
+        const jsonObject = JSON.parse(json);
         const schemaObject = JSON.parse(schema);
 
         const ajv = new Ajv();
 
         const validate = ajv.compile(schemaObject);
-        const valid = validate(json);
+        const valid = validate(jsonObject);
         if (!valid) {
+          console.log("Validation failed");
           return TypedNextResponse.json(JSON.stringify(validate.errors), {
             status: 400,
           });
@@ -47,6 +49,7 @@ export const { POST } = route({
           status: 201,
         });
       } catch (error) {
+        console.log("Unknown error", error);
         return TypedNextResponse.json(`${error}`, {
           status: 400,
         });
