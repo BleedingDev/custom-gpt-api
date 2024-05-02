@@ -64,7 +64,7 @@ export const { GET, POST } = route({
     .handler(async (req) => {
       const { name } = await req.json();
 
-      return TypedNextResponse.json(`New TODO created: ${name}`, {
+      return TypedNextResponse.json(`New AI company created: ${name}`, {
         status: 201,
       });
     }),
