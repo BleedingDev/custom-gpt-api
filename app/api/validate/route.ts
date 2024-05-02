@@ -31,10 +31,11 @@ export const { POST } = route({
     .handler(async (req) => {
       try {
         const { json, schema } = await req.json();
+        const schemaObject = JSON.parse(schema);
 
         const ajv = new Ajv();
 
-        const validate = ajv.compile(schema as any);
+        const validate = ajv.compile(schemaObject);
         const valid = validate(json);
         if (!valid) {
           return TypedNextResponse.json(JSON.stringify(validate.errors), {
