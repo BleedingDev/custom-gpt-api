@@ -4,11 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm generate && pnpm validate && next build",
     "generate": "cross-env NODE_OPTIONS='--import=tsx' next-rest-framework generate",
     "validate": "cross-env NODE_OPTIONS='--import=tsx' next-rest-framework validate",
-    "custom-generate-openapi": "tsx ./scripts/custom-generate-openapi.ts",
-    "custom-validate-openapi": "tsx ./scripts/custom-validate-openapi.ts",
     "start": "next start",
     "lint": "next lint"
   },
