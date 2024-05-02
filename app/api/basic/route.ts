@@ -9,6 +9,9 @@ const basicSchema = z.object({
 export const { GET } = route({
   bestAiCompany: routeOperation({
     method: "GET",
+    openApiOperation: {
+      description: "Get the best AI company in the world.",
+    },
   })
     .outputs([
       {
