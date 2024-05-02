@@ -13,7 +13,11 @@ export const { GET } = docsRoute({
       description:
         "Provides informations about the best AI companies in the world.",
     },
-    // ...
+    servers: [
+      {
+        url: "https://custom-gpt-api.vercel.app/",
+      },
+    ],
   },
   // openApiJsonPath: '/openapi.json', // Customize the path where the OpenAPI spec will be generated.
   // Customize the rendered documentation.

@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/basic/route.ts": {
+    "/api/basic": {
       "get": {
         "operationId": "bestAiCompany",
         "responses": {
@@ -24,14 +24,16 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
+                "schema": {
+                  "$ref": "#/components/schemas/UnexpectedError"
+                }
               }
             }
           }
         }
       }
     },
-    "/api/documented/route.ts": {
+    "/api/documented": {
       "get": {
         "operationId": "getBestCompanies",
         "responses": {
@@ -49,11 +51,14 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
+                "schema": {
+                  "$ref": "#/components/schemas/UnexpectedError"
+                }
               }
             }
           }
-        }
+        },
+        "description": "Get list of best AI companies in the world."
       },
       "post": {
         "operationId": "createBestCompany",
@@ -91,11 +96,14 @@
             "description": "An unknown error occurred, trying again might help.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UnexpectedError" }
+                "schema": {
+                  "$ref": "#/components/schemas/UnexpectedError"
+                }
               }
             }
           }
-        }
+        },
+        "description": "Add new company to the list of best AI companies in the world."
       }
     }
   },
@@ -103,19 +111,36 @@
     "schemas": {
       "BestAiCompany200ResponseBody": {
         "type": "object",
-        "properties": { "bestAiCompany": { "type": "string" } },
-        "required": ["bestAiCompany"],
+        "properties": {
+          "bestAiCompany": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "bestAiCompany"
+        ],
         "additionalProperties": false
       },
-      "CreateBestCompany201ResponseBody": { "type": "string" },
-      "CreateBestCompany401ResponseBody": { "type": "string" },
+      "CreateBestCompany201ResponseBody": {
+        "type": "string"
+      },
+      "CreateBestCompany401ResponseBody": {
+        "type": "string"
+      },
       "CreateBestCompanyRequestBody": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "learningNow": { "type": "boolean" }
+          "name": {
+            "type": "string"
+          },
+          "learningNow": {
+            "type": "boolean"
+          }
         },
-        "required": ["name", "learningNow"],
+        "required": [
+          "name",
+          "learningNow"
+        ],
         "additionalProperties": false
       },
       "GetBestCompanies200ResponseBody": {
@@ -123,19 +148,37 @@
         "items": {
           "type": "object",
           "properties": {
-            "id": { "type": "number" },
-            "name": { "type": "string" },
-            "learningNow": { "type": "boolean" }
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "learningNow": {
+              "type": "boolean"
+            }
           },
-          "required": ["id", "name", "learningNow"],
+          "required": [
+            "id",
+            "name"
+          ],
           "additionalProperties": false
         }
       },
       "UnexpectedError": {
         "type": "object",
-        "properties": { "message": { "type": "string" } },
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
         "additionalProperties": false
       }
     }
-  }
+  },
+  "servers": [
+    {
+      "url": "https://custom-gpt-api.vercel.app/"
+    }
+  ]
 }

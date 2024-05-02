@@ -28,12 +28,15 @@ const MOCK_COMPANIES = [
 const companySchema = z.object({
   id: z.number(),
   name: z.string(),
-  learningNow: z.boolean(),
+  learningNow: z.boolean().optional(),
 });
 
 export const { GET, POST } = route({
   getBestCompanies: routeOperation({
     method: "GET",
+    openApiOperation: {
+      description: "Get list of best AI companies in the world.",
+    },
   })
     .outputs([
       {
@@ -58,6 +61,10 @@ export const { GET, POST } = route({
 
   createBestCompany: routeOperation({
     method: "POST",
+    openApiOperation: {
+      description:
+        "Add new company to the list of best AI companies in the world.",
+    },
   })
     .input({
       contentType: "application/json",
