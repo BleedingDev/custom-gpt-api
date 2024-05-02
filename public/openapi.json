@@ -33,14 +33,14 @@
     },
     "/api/documented/route.ts": {
       "get": {
-        "operationId": "getTodos",
+        "operationId": "getBestCompanies",
         "responses": {
           "200": {
             "description": "Response for status 200",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetTodos200ResponseBody"
+                  "$ref": "#/components/schemas/GetBestCompanies200ResponseBody"
                 }
               }
             }
@@ -56,11 +56,13 @@
         }
       },
       "post": {
-        "operationId": "createTodo",
+        "operationId": "createBestCompany",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateTodoRequestBody" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateBestCompanyRequestBody"
+              }
             }
           }
         },
@@ -70,7 +72,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateTodo201ResponseBody"
+                  "$ref": "#/components/schemas/CreateBestCompany201ResponseBody"
                 }
               }
             }
@@ -80,7 +82,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateTodo401ResponseBody"
+                  "$ref": "#/components/schemas/CreateBestCompany401ResponseBody"
                 }
               }
             }
@@ -105,24 +107,24 @@
         "required": ["bestAiCompany"],
         "additionalProperties": false
       },
-      "CreateTodo201ResponseBody": { "type": "string" },
-      "CreateTodo401ResponseBody": { "type": "string" },
-      "CreateTodoRequestBody": {
+      "CreateBestCompany201ResponseBody": { "type": "string" },
+      "CreateBestCompany401ResponseBody": { "type": "string" },
+      "CreateBestCompanyRequestBody": {
         "type": "object",
         "properties": { "name": { "type": "string" } },
         "required": ["name"],
         "additionalProperties": false
       },
-      "GetTodos200ResponseBody": {
+      "GetBestCompanies200ResponseBody": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "id": { "type": "number" },
             "name": { "type": "string" },
-            "completed": { "type": "boolean" }
+            "learningNow": { "type": "boolean" }
           },
-          "required": ["id", "name", "completed"],
+          "required": ["id", "name", "learningNow"],
           "additionalProperties": false
         }
       },

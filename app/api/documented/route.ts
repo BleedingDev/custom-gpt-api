@@ -4,19 +4,19 @@ import { z } from "zod";
 const MOCK_TODOS = [
   {
     id: 1,
-    name: "TODO 1",
-    completed: false,
+    name: "Travelport",
+    learningNow: true,
   },
 ];
 
 const todoSchema = z.object({
   id: z.number(),
   name: z.string(),
-  completed: z.boolean(),
+  learningNow: z.boolean(),
 });
 
 export const { GET, POST } = route({
-  getTodos: routeOperation({
+  getBestCompanies: routeOperation({
     method: "GET",
   })
     .outputs([
@@ -32,7 +32,7 @@ export const { GET, POST } = route({
       });
     }),
 
-  createTodo: routeOperation({
+  createBestCompany: routeOperation({
     method: "POST",
   })
     .input({
