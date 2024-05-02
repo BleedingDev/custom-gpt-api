@@ -47,7 +47,7 @@ export const { POST } = route({
           status: 201,
         });
       } catch (error) {
-        return TypedNextResponse.json(`Error: ${error}`, {
+        return TypedNextResponse.json(`${error}`, {
           status: 400,
         });
       }
