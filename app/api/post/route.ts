@@ -89,9 +89,12 @@ export const { GET, POST } = route({
     // Optional middleware logic executed before request validation.
     .middleware((req) => {
       if (!req.headers.get("very-secure")) {
-        return TypedNextResponse.json("Unauthorized", {
-          status: 401,
-        });
+        return TypedNextResponse.json(
+          "Unauthorized, you are missing 'very-secure' header in your request",
+          {
+            status: 401,
+          }
+        );
       }
     })
     .handler(async (req) => {
