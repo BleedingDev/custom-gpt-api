@@ -103,7 +103,10 @@ export const { GET, POST } = route({
       };
       const parsedCompany = companySchema.parse(company);
 
-      await kv.hset("bestCompanies", parsedCompany);
+      const companies = await kv.get("bestCompanies");
+      const parsedCompanies = z.array(companySchema).parse(companies);
+
+      await kv.set("bestCompanies", [...parsedCompanies, parsedCompany]);
 
       return TypedNextResponse.json(`New AI company created: ${name}`, {
         status: 201,
