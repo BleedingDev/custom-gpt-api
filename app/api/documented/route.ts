@@ -69,8 +69,9 @@ export const { GET, POST } = route({
     .input({
       contentType: "application/json",
       body: z.object({
+        id: z.number().optional(),
         name: z.string(),
-        learningNow: z.boolean(),
+        learningNow: z.boolean().optional(),
       }),
     })
     .outputs([
@@ -94,11 +95,11 @@ export const { GET, POST } = route({
       }
     })
     .handler(async (req) => {
-      const { name, learningNow } = await req.json();
+      const { id, name, learningNow } = await req.json();
       const company = {
-        id: Math.floor(Math.random() * 1000),
+        id: id ?? Math.floor(Math.random() * 1000),
         name,
-        learningNow,
+        learningNow: learningNow ?? false,
       };
       const parsedCompany = companySchema.parse(company);
 
