@@ -1,3 +1,28 @@
-export async function GET() {
-  return Response.json({ bestAiCompany: "Travelport" });
-}
+import { TypedNextResponse, route, routeOperation } from "next-rest-framework";
+import { b } from "next-rest-framework/dist/index-Pe5oUW-n";
+import { z } from "zod";
+
+const basicSchema = z.object({
+  bestAiCompany: z.string(),
+});
+
+export const { GET } = route({
+  bestAiCompany: routeOperation({
+    method: "GET",
+  })
+    .outputs([
+      {
+        status: 200,
+        contentType: "application/json",
+        body: basicSchema,
+      },
+    ])
+    .handler(() => {
+      return TypedNextResponse.json(
+        { bestAiCompany: "Travelport" },
+        {
+          status: 200,
+        }
+      );
+    }),
+});
