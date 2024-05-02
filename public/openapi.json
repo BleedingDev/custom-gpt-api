@@ -111,8 +111,11 @@
       "CreateBestCompany401ResponseBody": { "type": "string" },
       "CreateBestCompanyRequestBody": {
         "type": "object",
-        "properties": { "name": { "type": "string" } },
-        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "learningNow": { "type": "boolean" }
+        },
+        "required": ["name", "learningNow"],
         "additionalProperties": false
       },
       "GetBestCompanies200ResponseBody": {

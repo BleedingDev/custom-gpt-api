@@ -1,5 +1,6 @@
 import { TypedNextResponse, route, routeOperation } from "next-rest-framework";
 import { z } from "zod";
+import { kv } from "@vercel/kv";
 
 const MOCK_COMPANIES = [
   {
@@ -24,7 +25,7 @@ const MOCK_COMPANIES = [
   },
 ];
 
-const todoSchema = z.object({
+const companySchema = z.object({
   id: z.number(),
   name: z.string(),
   learningNow: z.boolean(),
@@ -38,11 +39,19 @@ export const { GET, POST } = route({
       {
         status: 200,
         contentType: "application/json",
-        body: z.array(todoSchema),
+        body: z.array(companySchema),
       },
     ])
-    .handler(() => {
-      return TypedNextResponse.json(MOCK_COMPANIES, {
+    .handler(async () => {
+      const companies = await kv.get("bestCompanies");
+      if (!companies) {
+        await kv.set("bestCompanies", MOCK_COMPANIES);
+        return TypedNextResponse.json(MOCK_COMPANIES, {
+          status: 200,
+        });
+      }
+      const parsedCompanies = z.array(companySchema).parse(companies);
+      return TypedNextResponse.json(parsedCompanies, {
         status: 200,
       });
     }),
@@ -54,6 +63,7 @@ export const { GET, POST } = route({
       contentType: "application/json",
       body: z.object({
         name: z.string(),
+        learningNow: z.boolean(),
       }),
     })
     .outputs([
@@ -77,7 +87,15 @@ export const { GET, POST } = route({
       }
     })
     .handler(async (req) => {
-      const { name } = await req.json();
+      const { name, learningNow } = await req.json();
+      const company = {
+        id: Math.floor(Math.random() * 1000),
+        name,
+        learningNow,
+      };
+      const parsedCompany = companySchema.parse(company);
+
+      await kv.hset("bestCompanies", parsedCompany);
 
       return TypedNextResponse.json(`New AI company created: ${name}`, {
         status: 201,
